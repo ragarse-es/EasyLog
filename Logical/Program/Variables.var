@@ -1,0 +1,11 @@
+VAR
+	ErrorNumberTest : UINT := 12345;
+	LogMessageTest2 : STRING[256] := 'msg2';
+	LogMessageTest : STRING[256] := 'msg1';
+	LoggerName2 : STRING[20] := 'logger2';
+	LoggerName : STRING[20] := 'logger1';
+	InsertLog : BOOL;
+	WriteLog : BOOL;
+	Status1 : DINT;
+	Status2 : DINT;
+END_VAR
