@@ -2,6 +2,9 @@
 <?AutomationStudio FileVersion="4.9"?>
 <Physical xmlns="http://br-automation.co.at/AS/Physical">
   <Objects>
-    <Object Type="Configuration">Config1</Object>
+    <Object Type="Configuration">Dynamic_Intel</Object>
+    <Object Type="Configuration">Static_Intel</Object>
+    <Object Type="Configuration">Dynamic_ARM</Object>
+    <Object Type="Configuration">Static_ARM</Object>
   </Objects>
 </Physical>

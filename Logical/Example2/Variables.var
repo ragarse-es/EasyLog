@@ -1,0 +1,14 @@
+VAR
+	InfoLog1 : InputsEasyLogTyp := (LogLevel:=3,ErrorNumber:=1111,Message:='Temperature Alarm',LoggerName:='TempAlarm');
+	InfoLog2 : InputsEasyLogTyp := (LogLevel:=2,ErrorNumber:=2222,Message:='Temperature Warning',LoggerName:='TempWarn');
+	Status1 : DINT;
+	Status2 : DINT;
+	Temperature : INT;
+	AlarmLimit : INT := 40;
+	WarningLimit : INT := 30;
+	TempStr : STRING[80];
+	AlarmLimitStr : STRING[80];
+	WarningLimitStr : STRING[80];
+	TemperatureAlarm : BOOL;
+	TemperatureWarning : BOOL;
+END_VAR

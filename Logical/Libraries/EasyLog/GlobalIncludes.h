@@ -9,7 +9,7 @@ typedef enum LoggerStep_enum
 typedef struct LoggerEntry_type
 	{	
 	unsigned char LogLevel;
-	unsigned short ErrorNumber;
+	long int ErrorNumber;
 	char AsciiData[257];
 } LoggerEntry_type;
 
@@ -29,6 +29,7 @@ typedef struct LoggerHandler_type
 	struct ArEventLogGetIdent ArEventLogGetIdent_0;
 	struct ArEventLogCreate ArEventLogCreate_0;
 	struct ArEventLogWrite ArEventLogWrite_0;
+	plcbit LastExecute;
 } LoggerHandler_type;
 
 

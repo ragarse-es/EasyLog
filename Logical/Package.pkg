@@ -6,6 +6,7 @@
     <Object Type="File" Description="Global variables">Global.var</Object>
     <Object Type="Package" Description="Global libraries">Libraries</Object>
     <Object Type="DataObject" Language="Vc" Description="800x480 (WVGA)">Visu</Object>
-    <Object Type="Program" Language="IEC">Program</Object>
+    <Object Type="Program" Language="IEC">Example1</Object>
+    <Object Type="Program" Language="IEC">Example2</Object>
   </Objects>
 </Package>

@@ -1,52 +1,6 @@
 (*********************************************************************
- * Legacy Errors
- ********************************************************************)
-VAR CONSTANT
-	sdERR_SYSTEM : UINT := 50000; (*System error. Contact B&R support*)
-	sdERR_DATA_LOST : UINT := 50001; (*No valid data was found neither on the permanent memory nor on the exchangeable memory/defined folder*)
-	sdERR_NO_VALID_FOLDER_FOUND : UINT := 50002; (*No folder was found*)
-	sdERR_NO_VALID_USB_FOUND : UINT := 50002; (*No USB mass storage was found*)
-	sdERR_BAD_CONFIG : UINT := 50003; (*The variables FirstReserve and LastReserve are not in the correct order in the permanent table*)
-	sdERR_APPLICATION_ERROR : UINT := 50004; (*Some task wrote over the DataObject's memory area*)
-END_VAR
-(*********************************************************************
- * Legacy Warnings
- ********************************************************************)
-VAR CONSTANT
-	sdWRN_PERM_RESTORED : UINT := 50010; (*The PERMMEM was restored from the exchangeable memory or from the defined folder*)
-	sdWRN_BACKUP_RESTORED : UINT := 50011; (*The backup was restored from the PERMMEM*)
-	sdWRN_BACKUP_RECOVERED : UINT := 50012; (*The backup was recovered from being inconsistent*)
-	sdWRN_NO_REMOTE_INSTALL_USB : UINT := 50013; (*There is no USB with a remote install structure*)
-END_VAR
-(*********************************************************************
- * Legacy Informations
- ********************************************************************)
-VAR CONSTANT
-	sdINF_GENERIC : UINT := 50020; (*Generic constant for information logs*)
-END_VAR
-(*********************************************************************
- * Other constants
- ********************************************************************)
-VAR CONSTANT
-	sdRB_MAX_NUM_PV : USINT := 100; (*Maximum number of PVs to be backed up*)
-	sdRB_MAX_PV_NAME_LEN : USINT := 255; (*Maximum length of the name of each PV to be backed up*)
-	sdRB_MAX_INDEX_PV : USINT := sdRB_MAX_NUM_PV-1; (*Used for array definition*)
-	sdRB_MIN_SAVE_TIME : TIME := T#1s; (*Minimum time allowed for SaveTime and SaveTimeUsb*)
-	sdRB_DEFAULT_SAVE_TIME : TIME := T#20s; (*Fallback value for SaveTime and SaveTimeUsb, when the configured value is too low*)
-END_VAR
-(*********************************************************************
- * Other constants
- ********************************************************************)
-VAR CONSTANT
-	sdRBF_MAX_NUM_PV : USINT := 100; (*Maximum number of PVs to be backed up*)
-	sdRBF_MAX_PV_NAME_LEN : USINT := 255; (*Maximum length of the name of each PV to be backed up*)
-	sdRBF_MAX_INDEX_PV : USINT := sdRBF_MAX_NUM_PV-1; (*Used for array definition*)
-	sdRBF_MIN_SAVE_TIME : TIME := T#1s; (*Minimum time allowed for SaveTime and SaveTimeUsb*)
-	sdRBF_DEFAULT_SAVE_TIME : TIME := T#20s; (*Fallback value for SaveTime and SaveTimeUsb, when the configured value is too low*)
-END_VAR
-(*********************************************************************
  * Logger Constants
  ********************************************************************)
 VAR CONSTANT
-	MAX_LOGGER_QUEUE : USINT := 110;
+	MAX_LOGGER_QUEUE : USINT := 10;
 END_VAR
