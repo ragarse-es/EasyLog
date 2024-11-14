@@ -3,8 +3,6 @@
 <Physical xmlns="http://br-automation.co.at/AS/Physical">
   <Objects>
     <Object Type="Configuration">Dynamic_Intel</Object>
-    <Object Type="Configuration">Static_Intel</Object>
     <Object Type="Configuration">Dynamic_ARM</Object>
-    <Object Type="Configuration">Static_ARM</Object>
   </Objects>
 </Physical>
