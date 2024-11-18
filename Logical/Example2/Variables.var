@@ -1,5 +1,5 @@
 VAR
-	InfoLog : InputsEasyLogTyp := (LogLevel:=3,ErrorNumber:=1111,Message:='Temperature Alarm',LoggerName:='TempAlarm');
+	Message : STRING[256];
 	Status : DINT;
 	Temperature : INT;
 	AlarmLimit : INT := 40;

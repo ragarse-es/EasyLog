@@ -257,7 +257,7 @@ long int UserLogWrite(struct LoggerHandler_type* Handler)
 
 
 /* Function to insert messages in custom loggers in an aeasy way. The Executed is detected by Edge*/
-long int EasyLog(plcbit Execute, struct InputsEasyLogTyp* LoggerInfo)
+long int EasyLog(plcbit Execute, plcstring* LoggerName, unsigned char LogLevel, unsigned short ErrorNumber, plcstring* Message)
 {
 	//Initialize the different status
 	long int Status = ERR_OK;	
@@ -265,11 +265,11 @@ long int EasyLog(plcbit Execute, struct InputsEasyLogTyp* LoggerInfo)
 	long int StatusWrite = ERR_OK;
 		
 	//Get the pointer to the logger name
-	char* pCharMessage = LoggerInfo->Message;
+	char* pCharMessage = Message;
 	unsigned long pMessage = reinterpret_cast<unsigned long>(pCharMessage);
 	
 	//Get the pointer to the message
-	char* pCharLoggerName = LoggerInfo->LoggerName;
+	char* pCharLoggerName = LoggerName;
 	unsigned long pLoggerName = reinterpret_cast<unsigned long>(pCharLoggerName);
 		
 	//Search the map to check the last execute
@@ -279,14 +279,14 @@ long int EasyLog(plcbit Execute, struct InputsEasyLogTyp* LoggerInfo)
 	if (Execute)
 	{
 		//Check that the parameters are correct when an insertion is needed
-		if (strcmp(LoggerInfo->Message, "") == 0 || strcmp(LoggerInfo->LoggerName, "") == 0 || LoggerInfo->LogLevel < 0 || LoggerInfo->LogLevel > 3)
+		if (strcmp(Message, "") == 0 || strcmp(LoggerName, "") == 0 || LogLevel < 0 || LogLevel > 3)
 		{
 			Status = ERR_BUR_ILLPAR;
 		}
 		else
 		{
 			//Enqueue the message in the Fifo
-			StatusEnqueue = UserLogEnqueue( LoggerInfo->LogLevel, LoggerInfo->ErrorNumber, pMessage, pLoggerName, Handler);			
+			StatusEnqueue = UserLogEnqueue(LogLevel, ErrorNumber, pMessage, pLoggerName, Handler);			
 		}
 	}
 

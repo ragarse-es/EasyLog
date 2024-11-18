@@ -18,11 +18,8 @@
 
 
 PROGRAM _INIT
-	(* Set the parameters of the logger *)
-	InfoLog.ErrorNumber := 123;
-	InfoLog.LogLevel := arEVENTLOG_SEVERITY_INFO;
-	InfoLog.LoggerName := 'RcpChanges';
-	InfoLog.Message := 'TestMessage';
+	(* Set an initial message *)
+	Message := 'TestMessage';
 	
 	//Set the initial Values of the Recipe
 	Recipe.MaxTemp := 50;
@@ -34,7 +31,7 @@ PROGRAM _INIT
 	//Repeat until finish the process, with or without errors
 	// This will create the logger if it does not exist
 	REPEAT
-		Status := EasyLog(FALSE, InfoLog);
+		Status := EasyLog(FALSE, 'RcpChanges', arEVENTLOG_SEVERITY_INFO, 123,  Message);
 		UNTIL Status <> ERR_FUB_BUSY 
 	END_REPEAT;
 		
@@ -47,12 +44,12 @@ PROGRAM _CYCLIC
 	// Compare if the recipe has changed
 	IF 	brsmemcmp(ADR(RecipeOld.Name), ADR(Recipe.Name), SIZEOF(Recipe.Name)) <> 0 THEN
 		//Creation of the message
-		InfoLog.Message := CONCAT('Parameter Name of the recipe has changed. Old value = ', RecipeOld.Name);		
-		InfoLog.Message := CONCAT(InfoLog.Message, '. New value = ');
-		InfoLog.Message := CONCAT(InfoLog.Message, Recipe.Name);
+		Message := CONCAT('Parameter Name of the recipe has changed. Old value = ', RecipeOld.Name);		
+		Message := CONCAT(Message, '. New value = ');
+		Message := CONCAT(Message, Recipe.Name);
 		
 		//Register the change
-		Status := EasyLog(TRUE, InfoLog);	
+		Status := EasyLog(FALSE, 'RcpChanges', arEVENTLOG_SEVERITY_INFO, 123,  Message);
 	
 		IF Status <> ERR_OK AND Status <> ERR_FUB_BUSY THEN
 			//Check the error and solve it
@@ -69,13 +66,13 @@ PROGRAM _CYCLIC
 	IF 	brsmemcmp(ADR(RecipeOld.MaxTemp), ADR(Recipe.MaxTemp), SIZEOF(Recipe.MaxTemp)) <> 0 THEN
 		//Creation of the message
 		brsitoa(RecipeOld.MaxTemp, ADR(AuxStr));
-		InfoLog.Message := CONCAT('Parameter MaxTemp of the recipe has changed. Old value = ', AuxStr);		
-		InfoLog.Message := CONCAT(InfoLog.Message, '. New value = ');
+		Message := CONCAT('Parameter MaxTemp of the recipe has changed. Old value = ', AuxStr);		
+		Message := CONCAT(Message, '. New value = ');
 		brsitoa(Recipe.MaxTemp, ADR(AuxStr));
-		InfoLog.Message := CONCAT(InfoLog.Message, AuxStr);	
+		Message := CONCAT(Message, AuxStr);	
 		
 		//Register the change
-		Status := EasyLog(TRUE, InfoLog);	
+		Status := EasyLog(FALSE, 'RcpChanges', arEVENTLOG_SEVERITY_INFO, 123,  Message);	
 	
 		IF Status <> ERR_OK AND Status <> ERR_FUB_BUSY THEN
 			//Check the error and solve it

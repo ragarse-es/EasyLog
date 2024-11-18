@@ -17,16 +17,13 @@
  *********************************************************************************)
 
 PROGRAM _INIT
-	(* Set the parameters of the logger *)
-	InfoLog.ErrorNumber := 123;
-	InfoLog.LogLevel := arEVENTLOG_SEVERITY_INFO;
-	InfoLog.LoggerName := 'Temp';
-	InfoLog.Message := 'TestMessage';
+	(* Set an initial message *)
+	Message := 'TestMessage';
 		
 	//Repeat until finish the process, with or without errors
 	// This will create the logger if it does not exist
 	REPEAT
-	  	Status := EasyLog(FALSE, InfoLog);
+	  	Status := EasyLog(FALSE, 'Temp', arEVENTLOG_SEVERITY_INFO, 123,  Message);
 		UNTIL Status <> ERR_FUB_BUSY 
 	END_REPEAT;
 		
@@ -38,10 +35,10 @@ PROGRAM _CYCLIC
     // Convert the current temperature into a string
 	brsitoa(Temperature, ADR(TempStr));
 	TempStr := CONCAT(TempStr, ' ºC');
-	InfoLog.Message := CONCAT('Current Temperature: ', TempStr);
+	Message := CONCAT('Current Temperature: ', TempStr);
 	
 	// Execute the logger insertion if InsertMessages = TRUE
-	Status := EasyLog(InsertMessages, InfoLog);
+	Status := EasyLog(InsertMessages, 'Temp', arEVENTLOG_SEVERITY_INFO, 123,  Message);
  
 	IF Status <> ERR_OK AND Status <> ERR_FUB_BUSY THEN
 		//Check the error in the help and solve it

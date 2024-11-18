@@ -3,7 +3,6 @@
 <Library Version="1.00.0" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
   <Files>
     <File>EasyLog.fun</File>
-    <File>EasyLog.typ</File>
     <File Description="Exported constants">EasyLog.var</File>
     <File>GlobalIncludes.h</File>
     <File>UserLogWrite.cpp</File>
