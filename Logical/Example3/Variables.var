@@ -1,0 +1,7 @@
+VAR
+	InfoLog : InputsEasyLogTyp := (LogLevel:=3,ErrorNumber:=1111,Message:='Temperature Alarm',LoggerName:='TempAlarm');
+	Status : DINT;
+	Recipe : RecipeType;
+	RecipeOld : RecipeType;
+	AuxStr : STRING[80];
+END_VAR

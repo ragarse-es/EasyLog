@@ -8,6 +8,7 @@
   </TaskClass>
   <TaskClass Name="Cyclic#4">
     <Task Name="Example1" Source="Example1.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="Example3" Source="Example3.prg" Memory="UserROM" Language="IEC" Debugging="true" />
   </TaskClass>
   <TaskClass Name="Cyclic#5" />
   <TaskClass Name="Cyclic#6" />
@@ -39,6 +40,7 @@
     <LibraryObject Name="sys_lib" Source="Libraries.sys_lib.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="ArEventLog" Source="Libraries.ArEventLog.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="AsFifo" Source="Libraries.AsFifo.lby" Memory="UserROM" Language="binary" Debugging="true" />
+    <LibraryObject Name="EasyLog" Source="Libraries.EasyLog.lby" Memory="UserROM" Language="ANSIC" Debugging="true" />
     <LibraryObject Name="asiodiag" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="asioacc" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="SfDomDrv" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
@@ -48,7 +50,8 @@
     <LibraryObject Name="mpbase" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="MpSfDomMgr" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="aruser" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
-    <LibraryObject Name="EasyLog" Source="Libraries.EasyLog.lby" Memory="UserROM" Language="Binary" Debugging="true" />
-    <LibraryObject Name="asstring" Source="Libraries.asstring.lby" Memory="UserROM" Language="binary" Debugging="true" />
+    <LibraryObject Name="fileio" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="asusb" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="astcp" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
   </Libraries>
 </SwConfiguration>

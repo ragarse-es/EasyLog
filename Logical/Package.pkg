@@ -8,5 +8,6 @@
     <Object Type="DataObject" Language="Vc" Description="800x480 (WVGA)">Visu</Object>
     <Object Type="Program" Language="IEC">Example1</Object>
     <Object Type="Program" Language="IEC">Example2</Object>
+    <Object Type="Program" Language="IEC">Example3</Object>
   </Objects>
 </Package>
