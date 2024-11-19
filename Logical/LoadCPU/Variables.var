@@ -1,0 +1,5 @@
+VAR
+	TestBool : BOOL := FALSE;
+	i : DINT := 0;
+	NumberOfChanges : DINT := 1000;
+END_VAR

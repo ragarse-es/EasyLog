@@ -116,6 +116,8 @@ long int UserLogWrite(struct LoggerHandler_type* Handler)
 			Handler->LogIdent = Handler->ArEventLogCreate_0.Ident;				
 			ArEventLogCreate(&Handler->ArEventLogCreate_0);
 			Status = ERR_FUB_BUSY;
+			
+			
 		} 
 		else if (Handler->ArEventLogCreate_0.Error) 
 		{

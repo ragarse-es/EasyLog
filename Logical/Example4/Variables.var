@@ -1,0 +1,8 @@
+VAR
+	Message : STRING[256];
+	Status : DINT;
+	AuxStr : STRING[80];
+	i : UINT := 0;
+	MessagesPerCycle : UINT := 2;
+	InsertMessages : BOOL;
+END_VAR

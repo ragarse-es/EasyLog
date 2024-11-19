@@ -4,5 +4,6 @@
   <Objects>
     <Object Type="Configuration">Dynamic_Intel</Object>
     <Object Type="Configuration">Dynamic_ARM</Object>
+    <Object Type="Configuration">C20</Object>
   </Objects>
 </Physical>
