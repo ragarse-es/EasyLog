@@ -1,3 +1,5 @@
+
+#include "rtk.h"
 /* Datatypes and datatypes of function blocks */
 typedef enum LoggerStep_enum
 {	LOGGER_WAIT,
@@ -16,7 +18,7 @@ typedef struct LoggerEntry_type
 typedef struct LoggerFifo_type
 	{	
 	unsigned char PendingEntries;
-	struct LoggerEntry_type Entry[10];
+	struct LoggerEntry_type Entry[20];
 } LoggerFifo_type;
 
 typedef struct LoggerHandler_type
@@ -30,6 +32,7 @@ typedef struct LoggerHandler_type
 	struct ArEventLogCreate ArEventLogCreate_0;
 	struct ArEventLogWrite ArEventLogWrite_0;
 	plcbit LastExecute;
+	RTK_TASK_H TaskHandler;
 } LoggerHandler_type;
 
 

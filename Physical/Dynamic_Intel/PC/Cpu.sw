@@ -37,7 +37,7 @@
     <LibraryObject Name="sys_lib" Source="Libraries.sys_lib.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="ArEventLog" Source="Libraries.ArEventLog.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="AsFifo" Source="Libraries.AsFifo.lby" Memory="UserROM" Language="binary" Debugging="true" />
-    <LibraryObject Name="EasyLog" Source="Libraries.EasyLog.lby" Memory="UserROM" Language="ANSIC" Debugging="true" />
+    <LibraryObject Name="EasyLog" Source="Libraries.EasyLog.lby" Memory="UserROM" Language="ANSIC" AdditionalIncludeDirectories="\Logical\Libraries\EasyLog\AsyncCreation\" AdditionalLibraryDirectories="\Logical\Libraries\EasyLog\AsyncCreation\" AdditionalLibraries="AR" Debugging="true" />
     <LibraryObject Name="asiodiag" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="asioacc" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="SfDomDrv" Source="" Memory="UserROM" Language="Binary" Debugging="true" />

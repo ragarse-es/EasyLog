@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?AutomationStudio FileVersion="4.9"?>
 <Library Version="1.00.0" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
-  <Files>
-    <File>EasyLog.fun</File>
-    <File Description="Exported constants">EasyLog.var</File>
-    <File>GlobalIncludes.h</File>
-    <File>UserLogWrite.cpp</File>
-    <File Description="Dynamic memory allocation reserve">heap.cpp</File>
-  </Files>
+  <Objects>
+    <Object Type="File">EasyLog.fun</Object>
+    <Object Type="File" Description="Exported constants">EasyLog.var</Object>
+    <Object Type="File">GlobalIncludes.h</Object>
+    <Object Type="File">UserLogWrite.cpp</Object>
+    <Object Type="File" Description="Dynamic memory allocation reserve">heap.cpp</Object>
+    <Object Type="Package">AsyncCreation</Object>
+  </Objects>
   <Dependencies>
     <Dependency ObjectName="ArEventLog" />
     <Dependency ObjectName="AsBrStr" />

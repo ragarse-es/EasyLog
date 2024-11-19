@@ -16,6 +16,7 @@
     <Parameter ID="Cyclic1Tolerance" Value="10000" />
     <Parameter ID="Cyclic2Duration" Value="20000" />
     <Parameter ID="Cyclic2Tolerance" Value="0" />
+    <Parameter ID="Cyclic2Stack" Value="65365" />
     <Parameter ID="Cyclic3Duration" Value="50000" />
     <Parameter ID="Cyclic3Tolerance" Value="50000" />
     <Parameter ID="Cyclic4Duration" Value="100000" />
@@ -26,6 +27,7 @@
     <Parameter ID="Cyclic6Tolerance" Value="500000" />
     <Parameter ID="Cyclic7Duration" Value="1000000" />
     <Parameter ID="Cyclic7Tolerance" Value="1000000" />
+    <Parameter ID="Cyclic7Stack" Value="65365" />
     <Parameter ID="Cyclic8Duration" Value="10000" />
     <Parameter ID="Cyclic8Tolerance" Value="30000000" />
     <Group ID="FileDevice1" />
