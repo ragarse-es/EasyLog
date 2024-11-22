@@ -1,0 +1,5 @@
+VAR
+	Counter : DINT := 0;
+	Cmd : ARRAY[0..1] OF BOOL;
+	Block : BOOL;
+END_VAR

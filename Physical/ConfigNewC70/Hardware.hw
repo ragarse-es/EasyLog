@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio Version=4.12.3.127 FileVersion="4.9"?>
+<Hardware xmlns="http://br-automation.co.at/AS/Hardware">
+  <Module Name="4PPC70_0573_20B" Type="4PPC70.0573-20B" Version="1.5.4.0">
+    <Connector Name="IF2">
+      <Parameter ID="ActivateDevice" Value="1" />
+      <Group ID="Vnc1" />
+      <Parameter ID="VncVcObjectName1" Value="Visu1" />
+      <Parameter ID="VncKeyMappingFile1" Value="VC\PS2-Keyboard.dis" />
+    </Connector>
+    <Parameter ID="ConfigurationID" Value="EasyLog_ConfigNewC70" />
+    <Parameter ID="Cyclic2Tolerance" Value="0" />
+    <Parameter ID="Cyclic2Stack" Value="65365" />
+    <Parameter ID="Cyclic7Stack" Value="65365" />
+    <Parameter ID="VcObjectName" Value="Visu1" />
+    <Parameter ID="KeyMappingFile" Value="VC\4PPC70_0573_20B.dis" />
+  </Module>
+  <Module Name="4XP0043.00-00B" Type="4XP0043.00-00B" Version="2.1.0.0">
+    <Connection Connector="X2X1" TargetModule="4PPC70_0573_20B" TargetConnector="IF5">
+      <Cable Type="X2XCable" Length="10" Version="1.0.0.3" />
+    </Connection>
+    <Parameter ID="Supervision" Value="off" />
+  </Module>
+  <Module Name="X20BB80a" Type="X20BB80" Version="1.1.0.0" />
+  <Module Name="X20BC0083" Type="X20BC0083" Version="2.14.0.0">
+    <Connection Connector="PLK1" TargetModule="4PPC70_0573_20B" TargetConnector="IF1" NodeNumber="1">
+      <Cable Type="PowerlinkCable" Length="10" Version="1.0.0.3" />
+    </Connection>
+    <Connection Connector="SL" TargetModule="X20BB80a" TargetConnector="SL1" />
+    <Parameter ID="Supervision" Value="off" />
+  </Module>
+  <Module Name="X20BM11a" Type="X20BM11" Version="1.1.0.0">
+    <Connection Connector="X2X1" TargetModule="X20BM31a" TargetConnector="X2X2" />
+  </Module>
+  <Module Name="X20BM11b" Type="X20BM11" Version="1.1.0.0">
+    <Connection Connector="X2X1" TargetModule="X20BM11a" TargetConnector="X2X2" />
+  </Module>
+  <Module Name="X20BM31a" Type="X20BM31" Version="1.1.0.0">
+    <Connection Connector="X2X1" TargetModule="X20BB80a" TargetConnector="IF1" />
+  </Module>
+  <Module Name="X20DI9371" Type="X20DI9371" Version="1.4.0.0">
+    <Connection Connector="SS1" TargetModule="X20TB12c" TargetConnector="SS" />
+    <Connection Connector="SL" TargetModule="X20BM11a" TargetConnector="SL1" />
+    <Parameter ID="Supervision" Value="off" />
+  </Module>
+  <Module Name="X20DO8322" Type="X20DO8322" Version="1.5.0.0">
+    <Connection Connector="SS1" TargetModule="X20TB12d" TargetConnector="SS" />
+    <Connection Connector="SL" TargetModule="X20BM11b" TargetConnector="SL1" />
+    <Parameter ID="Supervision" Value="off" />
+  </Module>
+  <Module Name="X20PS9400" Type="X20PS9400" Version="1.8.0.0">
+    <Connection Connector="SS1" TargetModule="X20TB12b" TargetConnector="SS" />
+    <Connection Connector="PS" TargetModule="X20BB80a" TargetConnector="PS1" />
+    <Parameter ID="Supervision" Value="off" />
+  </Module>
+  <Module Name="X20SM1436" Type="X20SM1436" Version="2.3.0.0">
+    <Connection Connector="SS1" TargetModule="X20TB12a" TargetConnector="SS" />
+    <Connection Connector="SL" TargetModule="X20BM31a" TargetConnector="SL1" />
+    <Parameter ID="FunctionModel" Value="Standard" />
+    <Parameter ID="Supervision" Value="off" />
+  </Module>
+  <Module Name="X20TB12a" Type="X20TB12" Version="1.0.0.0" />
+  <Module Name="X20TB12b" Type="X20TB12" Version="1.0.0.0" />
+  <Module Name="X20TB12c" Type="X20TB12" Version="1.0.0.0" />
+  <Module Name="X20TB12d" Type="X20TB12" Version="1.0.0.0" />
+</Hardware>

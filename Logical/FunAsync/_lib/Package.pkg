@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio FileVersion="4.9"?>
+<Package xmlns="http://br-automation.co.at/AS/Package">
+  <Objects>
+    <Object Type="Package" TransferedForTargetSourceCompare="true">_IA32</Object>
+    <Object Type="Package" TransferedForTargetSourceCompare="true">_ARM</Object>
+  </Objects>
+</Package>

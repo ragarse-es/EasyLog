@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?AutomationStudio FileVersion="4.9"?>
+<BR.AS.HardwareTopology>
+  <TimeStamps>
+    <TimeStamp LogicalPath="ETA_Light.Hardware.hw" LastWriteTime="11/21/2024 08:37:02" />
+  </TimeStamps>
+  <Modules>
+    <Module Name="4PPC70_0573_20B" Type="4PPC70.0573-20B" X="85" Y="85" />
+  </Modules>
+  <Links />
+  <InfoElements />
+</BR.AS.HardwareTopology>

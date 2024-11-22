@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<?AutomationStudio Version="4.2.4.149"?>
+<?AutomationStudio Version="3.0.90.12"?>
 <DataSource xmlns="http://br-automation.co.at/AS/VC/Project" Name="Internal">
   <Property Name="AutoRefresh" Value="True" />
   <Property Name="DefaultUpdateTime" Value="200" />

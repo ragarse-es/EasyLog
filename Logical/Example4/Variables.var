@@ -4,6 +4,8 @@ VAR
 	AuxStr : STRING[80];
 	i : UINT := 0;
 	MessagesPerCycle : UINT := 2;
+	InsertMessages4 : BOOL;
+	InsertMessages3 : BOOL;
 	InsertMessages2 : BOOL;
 	InsertMessages : BOOL;
 	LoggerName2 : STRING[10] := 'Log1_2';
@@ -12,4 +14,7 @@ VAR
 	MessageIndex : DINT;
 	createInNextCycle : BOOL;
 	createNewLogger : BOOL;
+	BothInserts : BOOL;
+	LoggerName3 : STRING[256];
+	LoggerName4 : STRING[256];
 END_VAR

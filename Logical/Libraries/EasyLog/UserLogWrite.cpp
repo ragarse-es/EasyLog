@@ -36,6 +36,7 @@ static std::map<std::string, struct LoggerHandler_type> internalMap;
 
 long int UserLogWrite(struct LoggerHandler_type* Handler);
 
+static bool creatingLogger;
 
 /**
  * Retrieves or creates the internal data structure for the given instance.
@@ -93,7 +94,7 @@ long int UserLogEnqueue(unsigned char LogLevel, unsigned short ErrorNumber, unsi
 }
 
 //Function to execute asyncronously to create a new logger if it does not exist
-void CreateNewLogger(void *Params)
+void CreateNewLoggerAsync(void *Params)
 {
 	
 	// Recast Parameters to LoggerHandler_type*
@@ -123,14 +124,17 @@ void CreateNewLogger(void *Params)
 		Handler->LogIdent = Handler->ArEventLogCreate_0.Ident;				
 		ArEventLogCreate(&Handler->ArEventLogCreate_0);
 			
-		//Once created, call the function to insert the pendien entries
-		UserLogWrite(Handler);
+		creatingLogger = 0;
+		//Once created, call the function to insert the pending entries
+		//UserLogWrite(Handler);
 	
 
 	} 
 		//Error case
 	else if (Handler->ArEventLogCreate_0.Error) 
 	{
+		
+		creatingLogger = 0;
 		Handler->ArEventLogCreate_0.Execute = 0;
 		Handler->ErrorInternal = Handler->ErrorInternal ? Handler->ErrorInternal : Handler->ArEventLogCreate_0.StatusID;		
 		//Status = Handler->ArEventLogCreate_0.StatusID;							
@@ -144,24 +148,17 @@ void CreateNewLogger(void *Params)
 }
 
 
-
 //Function to execute asyncronously with the Logger name to insert 
 // the messages in the logger that has been inserted with the UserLogEnqueue function
-long int UserLogWrite(struct LoggerHandler_type* Handler)
+long int UserLogGetIdent(struct LoggerHandler_type* Handler)
 {
+	
 	//Initialize the Status
-	long int Status = ERR_OK;			
-	Handler->ErrorInternal = ERR_OK;
-	
-	// Local temporary variables which are used in many places
-	UDINT i;
-	BOOL createLog = 0;
-	BOOL writeLog = 0;
-	
-	
-	
+	long int Status = ERR_OK;
+	Handler->CreateLogger = 0;
+	Handler->WriteEntries = 0;
 	//If it is not busy the creation of the logger
-	if (!Handler->ArEventLogCreate_0.Busy) 
+	if (!creatingLogger) 
 	{
 		// Put the first entry in the Handler
 		Handler->LogEntry = Handler->LogFifo.Entry[0];		
@@ -178,8 +175,8 @@ long int UserLogWrite(struct LoggerHandler_type* Handler)
 			Handler->LogIdent = Handler->ArEventLogGetIdent_0.Ident;		
 			ArEventLogGetIdent(&Handler->ArEventLogGetIdent_0);			
 			if (Handler->LogFifo.PendingEntries > 0)
-			{	  
-				writeLog = 1;					
+			{	
+				Handler->WriteEntries = 1;		
 				Status = ERR_FUB_BUSY;
 			}
 			else
@@ -191,7 +188,7 @@ long int UserLogWrite(struct LoggerHandler_type* Handler)
 		else if (Handler->ArEventLogGetIdent_0.StatusID == arEVENTLOG_ERR_LOGBOOK_NOT_FOUND) 
 		{
 			Handler->ArEventLogGetIdent_0.Execute = 0;
-			createLog = 1;			
+			Handler->CreateLogger = 1;
 			ArEventLogGetIdent(&Handler->ArEventLogGetIdent_0);
 			Status = ERR_FUB_BUSY;
 		} 
@@ -203,23 +200,48 @@ long int UserLogWrite(struct LoggerHandler_type* Handler)
 			ArEventLogGetIdent(&Handler->ArEventLogGetIdent_0);
 			Status = Handler->ArEventLogGetIdent_0.StatusID;
 		}
-		
-		//Launch the asyncronous task to create the logger
-		if (createLog && Handler->TaskHandler == 0)
-		{		
-			LPRTK_CREATE_TASK_FKT function = &CreateNewLogger;
-			const char* taskName =  Handler->LoggerName;
-			RtkCreateTask(taskName, 200, 0x1000, 0x1000, RTK_TASK_RESUMED, function, Handler, &Handler->TaskHandler); 
-		}
+	}
+	return Status;
+}
 
-		
+long int UserLogCreateLog(struct LoggerHandler_type* Handler)
+{
+	//Initialize the Status
+	long int Status = ERR_OK;
+	if (!creatingLogger) 
+	{
+		//Launch the asyncronous task to create the logger
+		if (Handler->CreateLogger && creatingLogger == 0)
+		{	
+			creatingLogger = 1;	
+			LPRTK_CREATE_TASK_FKT function = &CreateNewLoggerAsync;
+			const char* taskName =  Handler->LoggerName;
+			RtkCreateTask(taskName, 10, 0x1000, 0x1000, RTK_TASK_RESUMED, function, Handler, &Handler->TaskHandler); 
+		}
+	}
+	
+	return Status;
+}
+
+//Function to execute asyncronously with the Logger name to insert 
+// the messages in the logger that has been inserted with the UserLogEnqueue function
+long int UserLogWrite(struct LoggerHandler_type* Handler)
+{
+	//Initialize the Status
+	long int Status = ERR_OK;			
+	Handler->ErrorInternal = ERR_OK;
+	
+	// Local temporary variables which are used in many places
+	UDINT i;	
+	
+	//If it is not busy the creation of the logger
+	if (!creatingLogger) 
+	{		
 		//Check if it is necessary to write the log
-		if (writeLog && Handler->LogFifo.PendingEntries > 0)
+		if (Handler->WriteEntries && Handler->LogFifo.PendingEntries > 0)
 		{					
-			for (int i = 0; i < Handler->LogFifo.PendingEntries + 1; i++)
-			{
-	  
-			
+			for (int i = 0; i < Handler->LogFifo.PendingEntries; i++)
+			{			
 				Status = ERR_FUB_BUSY;			
 				Handler->ArEventLogWrite_0.Execute = 1;
 				Handler->ArEventLogWrite_0.AddDataFormat = arEVENTLOG_ADDFORMAT_TEXT;
@@ -229,13 +251,13 @@ long int UserLogWrite(struct LoggerHandler_type* Handler)
 				brsstrcpy((UDINT)&Handler->ArEventLogWrite_0.ObjectID, (UDINT)&Handler->LoggerName);
 				Handler->ArEventLogWrite_0.Ident = Handler->LogIdent;
 				ArEventLogWrite(&Handler->ArEventLogWrite_0);
-			
+				
 				//Written OK. Quit from the queue and finish the process
 				if (Handler->ArEventLogWrite_0.Done) 
 				{
 					Handler->ArEventLogWrite_0.Execute = 0;
 					ArEventLogWrite(&Handler->ArEventLogWrite_0);
-				
+					
 					//Quit the entry of the Fifo once is writted
 					for (i = 0; i < (UDINT)Handler->LogFifo.PendingEntries - 1; i++) 
 					{
@@ -243,7 +265,7 @@ long int UserLogWrite(struct LoggerHandler_type* Handler)
 					}
 					brsmemset((UDINT)&Handler->LogFifo.Entry[Handler->LogFifo.PendingEntries-1], 0 , sizeof(Handler->LogFifo.Entry[0]));
 					Handler->LogFifo.PendingEntries--;
-				
+					
 					Status = ERR_OK;
 				} 
 					//Error case
@@ -302,6 +324,8 @@ long int EasyLog(plcbit Execute, plcstring* LoggerName, unsigned char LogLevel, 
 	//Write the pending messages (or create the logger in the first insertion)
 	if (strcmp(LoggerName, "") != 0)
 	{	 
+		UserLogGetIdent(Handler);
+		UserLogCreateLog(Handler);		
 		StatusWrite = UserLogWrite(Handler); 
 	}
 	else		

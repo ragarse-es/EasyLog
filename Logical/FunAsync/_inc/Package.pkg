@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio FileVersion="4.9"?>
+<Package xmlns="http://br-automation.co.at/AS/Package">
+  <Objects>
+    <Object Type="File">rtkObject.h</Object>
+    <Object Type="File">rtkPlainFifo.h</Object>
+    <Object Type="File">rtkRtc.h</Object>
+    <Object Type="File">rtkSemaphore.h</Object>
+    <Object Type="File">rtkSharedMemory.h</Object>
+    <Object Type="File">rtkTask.h</Object>
+    <Object Type="File">rtkTimer.h</Object>
+    <Object Type="File">rtkTypes.h</Object>
+    <Object Type="File">rtk.h</Object>
+    <Object Type="File">rtkBase.h</Object>
+    <Object Type="File">rtkCriticalSection.h</Object>
+    <Object Type="File">rtkFifo.h</Object>
+    <Object Type="File">rtkInterrupt.h</Object>
+    <Object Type="File">rtkMemory.h</Object>
+    <Object Type="File">rtkMisc.h</Object>
+    <Object Type="File">arexport.h</Object>
+  </Objects>
+</Package>

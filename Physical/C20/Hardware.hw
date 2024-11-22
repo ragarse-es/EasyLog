@@ -5,7 +5,7 @@
     <Connector Name="IF3">
       <Parameter ID="ActivateDevice" Value="1" />
       <Parameter ID="Mode" Value="Manual" />
-      <Parameter ID="InternetAddress" Value="10.10.10.11" />
+      <Parameter ID="InternetAddress" Value="10.10.10.100" />
       <Parameter ID="SubnetMask" Value="255.255.255.0" />
       <Parameter ID="InaPort" Value="11160" />
       <Parameter ID="ActivateSnmp" Value="2" />
@@ -15,8 +15,7 @@
     <Parameter ID="Cyclic1Duration" Value="10000" />
     <Parameter ID="Cyclic1Tolerance" Value="10000" />
     <Parameter ID="Cyclic2Duration" Value="20000" />
-    <Parameter ID="Cyclic2Tolerance" Value="0" />
-    <Parameter ID="Cyclic2Stack" Value="65365" />
+    <Parameter ID="Cyclic2Tolerance" Value="20000" />
     <Parameter ID="Cyclic3Duration" Value="50000" />
     <Parameter ID="Cyclic3Tolerance" Value="50000" />
     <Parameter ID="Cyclic4Duration" Value="100000" />

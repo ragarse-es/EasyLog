@@ -33,6 +33,9 @@ typedef struct LoggerHandler_type
 	struct ArEventLogWrite ArEventLogWrite_0;
 	plcbit LastExecute;
 	RTK_TASK_H TaskHandler;
+	bool CreatingLogger;
+	bool CreateLogger;
+	bool WriteEntries;
 } LoggerHandler_type;
 
 

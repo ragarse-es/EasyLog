@@ -1,1 +1,1 @@
-unsigned long bur_heap_size = 0x3FFFC; //256 KB 
+unsigned long bur_heap_size = 0x3FFFC; //256kB KB 
