@@ -10,7 +10,6 @@
     </Connector>
     <Parameter ID="ConfigurationID" Value="EasyLog_ConfigNewC70" />
     <Parameter ID="Cyclic2Tolerance" Value="0" />
-    <Parameter ID="Cyclic2Stack" Value="65365" />
     <Parameter ID="Cyclic7Stack" Value="65365" />
     <Parameter ID="VcObjectName" Value="Visu1" />
     <Parameter ID="KeyMappingFile" Value="VC\4PPC70_0573_20B.dis" />

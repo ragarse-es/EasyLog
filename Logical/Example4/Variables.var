@@ -17,4 +17,5 @@ VAR
 	BothInserts : BOOL;
 	LoggerName3 : STRING[256];
 	LoggerName4 : STRING[256];
+	OneInsert : BOOL;
 END_VAR

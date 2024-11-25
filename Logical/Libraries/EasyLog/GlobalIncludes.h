@@ -24,18 +24,17 @@ typedef struct LoggerFifo_type
 typedef struct LoggerHandler_type
 	{	signed long ErrorInternal;
 	char LoggerName[11];
-	enum LoggerStep_enum LogStep;
+//	enum LoggerStep_enum LogStep;
 	struct LoggerFifo_type LogFifo;
 	struct LoggerEntry_type LogEntry;
 	unsigned long LogIdent;
-	struct ArEventLogGetIdent ArEventLogGetIdent_0;
+//	struct ArEventLogGetIdent ArEventLogGetIdent_0;
 	struct ArEventLogCreate ArEventLogCreate_0;
-	struct ArEventLogWrite ArEventLogWrite_0;
-	plcbit LastExecute;
+//	struct ArEventLogWrite ArEventLogWrite_0;
+//	plcbit LastExecute;
 	RTK_TASK_H TaskHandler;
 	bool CreatingLogger;
 	bool CreateLogger;
-	bool WriteEntries;
 } LoggerHandler_type;
 
 

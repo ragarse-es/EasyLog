@@ -53,22 +53,38 @@ PROGRAM _CYCLIC
 		END_IF;
 		
 		IF InsertMessages THEN	 
-			InsertMessages := FALSE;
-			Status := EasyLog(InsertMessages, LoggerName, arEVENTLOG_SEVERITY_INFO, 123,  Message);
+			Status := EasyLog(InsertMessages, LoggerName, arEVENTLOG_SEVERITY_INFO, 123,  Message);	
+			IF OneInsert THEN	  
+				InsertMessages := FALSE;
+			END_IF;
 		END_IF;
 		IF InsertMessages2 THEN	 
-			InsertMessages2 := FALSE;
-			Status := EasyLog(InsertMessages2, LoggerName2, arEVENTLOG_SEVERITY_INFO, 123,  Message);		
+			Status := EasyLog(InsertMessages2, LoggerName2, arEVENTLOG_SEVERITY_INFO, 123,  Message);			
+			//	InsertMessages2 := FALSE;
+			IF OneInsert THEN	  
+				InsertMessages2 := FALSE;
+			END_IF;
 		END_IF;	
 		
-		BothInserts := FALSE;
 		
-//		IF InsertMessages3 THEN	  
-//			Status := EasyLog(InsertMessages3, LoggerName3, arEVENTLOG_SEVERITY_INFO, 123,  Message);		
-//		END_IF;
-//		IF InsertMessages4 THEN	  
-//			Status := EasyLog(InsertMessages4, LoggerName4, arEVENTLOG_SEVERITY_INFO, 123,  Message);		
-//		END_IF;	
+		IF InsertMessages3 THEN	  
+			Status := EasyLog(InsertMessages3, LoggerName3, arEVENTLOG_SEVERITY_INFO, 123,  Message);
+			//			InsertMessages3 := FALSE;
+			IF OneInsert THEN	  
+				InsertMessages3 := FALSE;
+			END_IF;
+		END_IF;
+		
+		IF InsertMessages4 THEN	  
+			Status := EasyLog(InsertMessages4, LoggerName4, arEVENTLOG_SEVERITY_INFO, 123,  Message);
+			//			InsertMessages4 := FALSE;
+			IF OneInsert THEN	  
+				InsertMessages4 := FALSE;
+			END_IF;
+		END_IF;	
+		
+		
+		BothInserts := FALSE;
 		
 	//	Status := EasyLog(InsertMessages2, LoggerName2, arEVENTLOG_SEVERITY_INFO, 123,  Message);		
 		
