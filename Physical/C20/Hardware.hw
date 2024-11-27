@@ -12,10 +12,10 @@
     </Connector>
     <Parameter ID="ConfigurationID" Value="EasyLog_Config1" />
     <Parameter ID="TimerDeviceType" Value="SWIOTIMER" />
-    <Parameter ID="Cyclic1Duration" Value="10000" />
-    <Parameter ID="Cyclic1Tolerance" Value="10000" />
+    <Parameter ID="Cyclic1Duration" Value="1000" />
+    <Parameter ID="Cyclic1Tolerance" Value="0" />
     <Parameter ID="Cyclic2Duration" Value="20000" />
-    <Parameter ID="Cyclic2Tolerance" Value="20000" />
+    <Parameter ID="Cyclic2Tolerance" Value="0" />
     <Parameter ID="Cyclic3Duration" Value="50000" />
     <Parameter ID="Cyclic3Tolerance" Value="50000" />
     <Parameter ID="Cyclic4Duration" Value="100000" />

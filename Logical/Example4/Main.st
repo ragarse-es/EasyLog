@@ -26,6 +26,11 @@ PROGRAM _CYCLIC
 		brsmemcpy(ADR(LoggerName4), ADR(LoggerName), SIZEOF(LoggerName));	  
 		LoggerName4 := CONCAT(LoggerName4, '4');
 
+		
+		InsertMessages := TRUE;
+		InsertMessages2 := TRUE;
+		InsertMessages3 := TRUE;
+		InsertMessages4 := TRUE;
 	END_IF; 
 	
 	
@@ -89,6 +94,12 @@ PROGRAM _CYCLIC
 	//	Status := EasyLog(InsertMessages2, LoggerName2, arEVENTLOG_SEVERITY_INFO, 123,  Message);		
 		
 
+		IF MessageIndex >=200 THEN
+			InsertMessages := FALSE;
+			InsertMessages2 := FALSE;
+			InsertMessages3 := FALSE;
+			InsertMessages4 := FALSE;
+		END_IF;
 	
 		IF Status <> ERR_OK AND Status <> ERR_FUB_BUSY THEN
 			//Check the error and solve it

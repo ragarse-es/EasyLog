@@ -4,7 +4,7 @@
   <Objects>
     <Object Type="File">EasyLog.fun</Object>
     <Object Type="File" Description="Exported constants">EasyLog.var</Object>
-    <Object Type="File">GlobalIncludes.h</Object>
+    <Object Type="File">GlobalIncludes.hpp</Object>
     <Object Type="File">UserLogWrite.cpp</Object>
     <Object Type="File" Description="Dynamic memory allocation reserve">heap.cpp</Object>
     <Object Type="Package">AsyncCreation</Object>
