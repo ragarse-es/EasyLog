@@ -44,8 +44,8 @@ struct ArEventLogWrite ArEventLogWrite_0;
  * exists in the internal map. If it does not, it initializes a new internal
  * structure and stores it in the map.
  */
-unsigned long SearchMap(unsigned long inst){
-	
+unsigned long SearchMap(unsigned long inst)
+{	
 	//Retrieve the logger name
 	std::string loggerName((char*)inst);	
 	std::map<std::string, unsigned long>::iterator it;
@@ -91,20 +91,29 @@ unsigned long SearchMap(unsigned long inst){
 	It will be enqueued in a Queue until the UserLogWrite inserts the messages in the logger*/
 long int UserLogEnqueue(unsigned char LogLevel, unsigned short ErrorNumber, unsigned long pAsciiData, unsigned long pLoggerName, unsigned long pHandler)
 {
+	//Initial status
+	long int Status = ERR_OK;
+	
 	//Retrieve the Handler and its queue through its pointers
 	struct LoggerHandler_type* Handler = reinterpret_cast<LoggerHandler_type*>(pHandler);
 	std::queue<LoggerEntry_type>* queue = reinterpret_cast<std::queue<LoggerEntry_type>*>(Handler->pLoggerQueue);
 	
-	long int Status = ERR_OK;
-	
-	//Create a new entry type with the external information
-	LoggerEntry_type newEntry;
-	newEntry.LogLevel = LogLevel;
-	newEntry.ErrorNumber = ErrorNumber;
-	brsmemcpy((UDINT)&newEntry.AsciiData, pAsciiData, sizeof(newEntry.AsciiData));
+	//Check not null pointers
+	if (pHandler == 0 || Handler->pLoggerQueue == 0)
+	{
+		Status = ERR_BUR_ILLBPTR;
+	}
+	else
+	{	
+		//Create a new entry type with the external information
+		LoggerEntry_type newEntry;
+		newEntry.LogLevel = LogLevel;
+		newEntry.ErrorNumber = ErrorNumber;
+		brsmemcpy((UDINT)&newEntry.AsciiData, pAsciiData, sizeof(newEntry.AsciiData));
 
-	//Push that entry in the queue  
-	queue->push(newEntry);
+		//Push that entry in the queue  
+		queue->push(newEntry);
+	}
 	
 	return Status;
 }
@@ -113,65 +122,69 @@ long int UserLogEnqueue(unsigned char LogLevel, unsigned short ErrorNumber, unsi
 // the messages in the logger that has been inserted with the UserLogEnqueue function
 long int UserLogWrite(unsigned long pHandler, bool fromAsync)
 {
+	//Initialize the Status
+	long int Status = ERR_OK;
+	
 	//Retrieve the Handler and its queue through its pointers
 	struct LoggerHandler_type* Handler = reinterpret_cast<LoggerHandler_type*>(pHandler);	
 	std::queue<LoggerEntry_type>* queue = reinterpret_cast<std::queue<LoggerEntry_type>*>(Handler->pLoggerQueue);
-	
-	//Initialize the Status
-	long int Status = ERR_OK;			
-	Handler->ErrorInternal = ERR_OK;
-	
-	//If it is not busy the creation of the logger
-	if (!Handler->CreatingLogger || fromAsync) 
-	{			
-		//Check if it is necessary to write the log
-		if (queue->size() > 0 && Handler->LogIdent != 0)
-		{		
-			int elements = queue->size();
-			for (int i = 0; i < elements; i++)
-			{	
-				// Put the first entry in the Handler		
-				Handler->LogEntry = queue->front();
 		
-				//Set the parameters of the write function
-				Status = ERR_FUB_BUSY;			
-				ArEventLogWrite_0.Execute = 1;
-				ArEventLogWrite_0.AddDataFormat = arEVENTLOG_ADDFORMAT_TEXT;
-				ArEventLogWrite_0.AddDataSize = brsstrlen((UDINT)&Handler->LogEntry.AsciiData) + 1;
-				ArEventLogWrite_0.AddData = (UDINT)&Handler->LogEntry.AsciiData;
-				ArEventLogWrite_0.EventID = ArEventLogMakeEventID(Handler->LogEntry.LogLevel,0,Handler->LogEntry.ErrorNumber);
-				brsstrcpy((UDINT)ArEventLogWrite_0.ObjectID, (UDINT)&Handler->LoggerName);
-				ArEventLogWrite_0.Ident = Handler->LogIdent;
-				ArEventLogWrite(&ArEventLogWrite_0);
-				
-				//Written OK. Quit from the queue and finish the process
-				if (ArEventLogWrite_0.Done) 
-				{
-					//Reset the function
-					ArEventLogWrite_0.Execute = 0;
+	//Check not null pointers
+	if (pHandler == 0 || Handler->pLoggerQueue == 0)
+	{
+		Status = ERR_BUR_ILLBPTR;
+	}
+	else
+	{	
+		//If it is not busy the creation of the logger
+		if (!Handler->CreatingLogger || fromAsync) 
+		{			
+			//Check if it is necessary to write the log
+			if (queue->size() > 0 && Handler->LogIdent != 0)
+			{		
+				int elements = queue->size();
+				for (int i = 0; i < elements; i++)
+				{	
+					// Put the first entry in the Handler		
+					Handler->LogEntry = queue->front();
+		
+					//Set the parameters of the write function
+					ArEventLogWrite_0.Execute = 1;
+					ArEventLogWrite_0.AddDataFormat = arEVENTLOG_ADDFORMAT_TEXT;
+					ArEventLogWrite_0.AddDataSize = brsstrlen((UDINT)&Handler->LogEntry.AsciiData) + 1;
+					ArEventLogWrite_0.AddData = (UDINT)&Handler->LogEntry.AsciiData;
+					ArEventLogWrite_0.EventID = ArEventLogMakeEventID(Handler->LogEntry.LogLevel,0,Handler->LogEntry.ErrorNumber);
+					brsstrcpy((UDINT)ArEventLogWrite_0.ObjectID, (UDINT)&Handler->LoggerName);
+					ArEventLogWrite_0.Ident = Handler->LogIdent;
 					ArEventLogWrite(&ArEventLogWrite_0);
+				
+					//Written OK. Quit from the queue and finish the process
+					if (ArEventLogWrite_0.Done) 
+					{
+						//Reset the function
+						ArEventLogWrite_0.Execute = 0;
+						ArEventLogWrite(&ArEventLogWrite_0);
 					
-					if (queue->size()>0)
-					{	  
-						//Delete the fist message
-						queue->pop();
-					}
-					
-					Status = ERR_OK;
-				} 
+						if (queue->size()>0)
+						{	  
+							//Delete the fist message
+							queue->pop();
+						}
+					} 
 					//Error case
-				else if (ArEventLogWrite_0.Error) 
-				{
-					//Get the error
-					Handler->ErrorInternal = Handler->ErrorInternal ? Handler->ErrorInternal : ArEventLogWrite_0.StatusID;
-					Status = ArEventLogWrite_0.StatusID;	
+					else if (ArEventLogWrite_0.Error) 
+					{
+						//Get the error
+						Handler->ErrorInternal = Handler->ErrorInternal ? Handler->ErrorInternal : ArEventLogWrite_0.StatusID;
+						Status = ArEventLogWrite_0.StatusID;	
 		
-					//Reset the function
-					ArEventLogWrite_0.Execute = 0;			
-					ArEventLogWrite(&ArEventLogWrite_0);				
+						//Reset the function
+						ArEventLogWrite_0.Execute = 0;			
+						ArEventLogWrite(&ArEventLogWrite_0);				
+					}
 				}
-			}
-		}			
+			}			
+		}
 	}
 	
 	Handler->ErrorInternal = Status;
@@ -185,7 +198,7 @@ void CreateNewLoggerAsync(void *Params)
 	// Recast Parameters to LoggerHandler_type*
 	unsigned long  pHandler = reinterpret_cast<unsigned long>(Params);		
 	struct LoggerHandler_type* Handler = reinterpret_cast<LoggerHandler_type*>(pHandler);
-	
+		
 	//Parameters of the new Logger
 	Handler->ArEventLogCreate_0.Execute = 1;
 	brsstrcpy((UDINT)&Handler->ArEventLogCreate_0.Name, (UDINT)&Handler->LoggerName);
@@ -196,7 +209,7 @@ void CreateNewLoggerAsync(void *Params)
 	do
 	{
 	  ArEventLogCreate(&Handler->ArEventLogCreate_0);
-	} while (!Handler->ArEventLogCreate_0.Done && !Handler->ArEventLogCreate_0.Error);
+	} while (Handler->ArEventLogCreate_0.Busy);
 		                     
 	//Created OK, Reset the create function and write the pending entries
 	if (Handler->ArEventLogCreate_0.Done) 
@@ -231,103 +244,102 @@ void CreateNewLoggerAsync(void *Params)
 }
 
 long int UserLogCreateLog(unsigned long pHandler)
-{
+{	
+	//Initialize the Status
+	long int Status = ERR_OK;
+	
 	//Retrieve the Handler through its pointer
 	struct LoggerHandler_type* Handler = reinterpret_cast<LoggerHandler_type*>(pHandler);
 	
-	//Initialize the Status
-	long int Status = ERR_OK;
-	if (!Handler->CreatingLogger) 
+	//Check not null pointers
+	if (pHandler == 0)
 	{
-		//Launch the asyncronous task to create the logger if necessary
-		if (Handler->CreateLogger && Handler->CreatingLogger == 0)
-		{	
-			Handler->CreatingLogger = 1;	
-			LPRTK_CREATE_TASK_FKT function = &CreateNewLoggerAsync;
-			const char* taskName =  Handler->LoggerName;
-			void* pHandlerVoid = reinterpret_cast<void*>(pHandler);
-			RtkCreateTask(taskName, 10, 0x1000, 0x1000, RTK_TASK_RESUMED, function, pHandlerVoid, &Handler->TaskHandler); 
-			
-		}
+		Status = ERR_BUR_ILLBPTR;
 	}
-	
+	else
+	{
+		if (!Handler->CreatingLogger) 
+		{
+			//Launch the asyncronous task to create the logger if necessary
+			if (Handler->CreateLogger && Handler->CreatingLogger == 0)
+			{	
+				Handler->CreatingLogger = 1;	
+				LPRTK_CREATE_TASK_FKT function = &CreateNewLoggerAsync;
+				const char* taskName =  Handler->LoggerName;
+				void* pHandlerVoid = reinterpret_cast<void*>(pHandler);
+				RtkCreateTask(taskName, 10, 0x1000, 0x1000, RTK_TASK_RESUMED, function, pHandlerVoid, &Handler->TaskHandler); 			
+			}
+		}	
+	}
 	return Status;
 }
 
 //Function to execute asyncronously with the Logger name to insert 
 // the messages in the logger that has been inserted with the UserLogEnqueue function
 long int UserLogGetIdent(unsigned long pHandler)
-{
+{	
+	//Initialize the Status
+	long int Status = ERR_OK;
+	
 	//Retrieve the Handler and its queue through its pointers
 	struct LoggerHandler_type* Handler = reinterpret_cast<LoggerHandler_type*>(pHandler);	
-	std::queue<LoggerEntry_type>* queue = reinterpret_cast<std::queue<LoggerEntry_type>*>(Handler->pLoggerQueue);
 	
-	//Initialize the Status
-	long int Status = ERR_OK;	
-	Handler->CreateLogger = 0;
-	
-	//Only search the logger if the log ident does not exist
-	if (Handler->LogIdent == 0)
+	//Check not null pointers
+	if (pHandler == 0)
+	{
+		Status = ERR_BUR_ILLBPTR;
+	}	
+	else
 	{	
-		//If it is not busy the creation of the logger
-		if (!Handler->CreatingLogger) 
+		Handler->CreateLogger = 0;	
+		//Only search the logger if the log ident does not exist
+		if (Handler->LogIdent == 0)
 		{	
-			//Get the info log
-			ArEventLogGetIdent_0.Execute = 1;
-			brsstrcpy((UDINT)ArEventLogGetIdent_0.Name, (UDINT)&Handler->LoggerName);   
-			ArEventLogGetIdent(&ArEventLogGetIdent_0);
+			//If it is not busy the creation of the logger
+			if (!Handler->CreatingLogger) 
+			{	
+				//Get the info log
+				ArEventLogGetIdent_0.Execute = 1;
+				brsstrcpy((UDINT)ArEventLogGetIdent_0.Name, (UDINT)&Handler->LoggerName);   
+				ArEventLogGetIdent(&ArEventLogGetIdent_0);
 		
-			//Finded the logger
-			if (ArEventLogGetIdent_0.Done) 
-			{
-				//Save the logger ident in the handler
-				Handler->LogIdent = ArEventLogGetIdent_0.Ident;	
-				
-				//Reset the function
-				ArEventLogGetIdent_0.Execute = 0;
-				ArEventLogGetIdent(&ArEventLogGetIdent_0);	
-				
-				if (queue->size() > 0)
-				{		
-					Status = ERR_FUB_BUSY;
-				}
-				else
+				//Finded the logger
+				if (ArEventLogGetIdent_0.Done) 
 				{
-					Status = ERR_OK;
+					//Save the logger ident in the handler
+					Handler->LogIdent = ArEventLogGetIdent_0.Ident;	
+				
+					//Reset the function
+					ArEventLogGetIdent_0.Execute = 0;
+					ArEventLogGetIdent(&ArEventLogGetIdent_0);	
+				} 
+					//First appearing of the logger, necessary creation
+				else if (ArEventLogGetIdent_0.StatusID == arEVENTLOG_ERR_LOGBOOK_NOT_FOUND) 
+				{
+					//Flag to star the creation of the logger
+					Handler->CreateLogger = 1;
+				
+					//Reset the function
+					ArEventLogGetIdent_0.Execute = 0;
+					ArEventLogGetIdent(&ArEventLogGetIdent_0);
+				} 
+				//Error case
+				else if (ArEventLogGetIdent_0.Error) 
+				{
+					Handler->ErrorInternal = Handler->ErrorInternal ? Handler->ErrorInternal : ArEventLogGetIdent_0.StatusID;
+				
+					//Get the error
+					Status = ArEventLogGetIdent_0.StatusID;
+				
+					//Reset the function
+					ArEventLogGetIdent_0.Execute = 0;
+					ArEventLogGetIdent(&ArEventLogGetIdent_0);
 				}
-			} 
-			//First appearing of the logger, necessary creation
-			else if (ArEventLogGetIdent_0.StatusID == arEVENTLOG_ERR_LOGBOOK_NOT_FOUND) 
-			{
-				//Flag to star the creation of the logger
-				Handler->CreateLogger = 1;
-				
-				//Reset the function
-				ArEventLogGetIdent_0.Execute = 0;
-				ArEventLogGetIdent(&ArEventLogGetIdent_0);
-				Status = ERR_FUB_BUSY;
-			} 
-			//Error case
-			else if (ArEventLogGetIdent_0.Error) 
-			{
-				Handler->ErrorInternal = Handler->ErrorInternal ? Handler->ErrorInternal : ArEventLogGetIdent_0.StatusID;
-				
-				//Get the error
-				Status = ArEventLogGetIdent_0.StatusID;
-				
-				//Reset the function
-				ArEventLogGetIdent_0.Execute = 0;
-				ArEventLogGetIdent(&ArEventLogGetIdent_0);
 			}
 		}
 	}
 	return Status;
 }
-
-
-
-
-
 
 
 /* Function to insert messages in custom loggers in an aeasy way. The Executed is detected by Edge*/
@@ -336,6 +348,7 @@ long int EasyLog(plcbit Execute, plcstring* LoggerName, unsigned char LogLevel, 
 	//Initialize the different status
 	long int Status = ERR_OK;	
 	long int StatusEnqueue = ERR_OK;
+	long int StatusGetIdent = ERR_OK;
 	long int StatusWrite = ERR_OK;
 		
 	//Get the pointer to the logger name
@@ -368,7 +381,7 @@ long int EasyLog(plcbit Execute, plcstring* LoggerName, unsigned char LogLevel, 
 	//Write the pending messages (or create the logger in the first insertion)
 	if (strcmp(LoggerName, "") != 0)
 	{	 		
-		UserLogGetIdent(pHandler);
+		StatusGetIdent = UserLogGetIdent(pHandler);
 		UserLogCreateLog(pHandler);		
 		StatusWrite = UserLogWrite(pHandler, 0); 
 	}
@@ -384,6 +397,10 @@ long int EasyLog(plcbit Execute, plcstring* LoggerName, unsigned char LogLevel, 
 		if (StatusEnqueue != ERR_OK)
 		{
 			Status = StatusEnqueue;	  
+		}
+		if (StatusGetIdent != ERR_OK)
+		{
+			Status = StatusGetIdent;	  
 		}
 		if(StatusWrite != ERR_OK)
 		{

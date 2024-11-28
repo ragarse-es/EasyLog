@@ -1,6 +1,5 @@
 #include "rtk.h"
 #include <queue>
-#include <list>
 
 /* Datatypes and datatypes of function blocks */
 typedef struct LoggerEntry_type
