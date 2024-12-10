@@ -87,7 +87,7 @@ long int Logger::UserLogEnqueue(unsigned char LogLevel, unsigned short ErrorNumb
 	//Check not null pointers
 	if (pHandler == 0 || Handler->pLoggerQueue == 0)
 	{
-		Status = ERR_BUR_ILLBPTR;
+		Status = ERR_BUR_ILLPAR;
 	}
 	else
 	{	
@@ -118,7 +118,7 @@ long int Logger::UserLogWrite(unsigned long pHandler, bool fromAsync)
 	//Check not null pointers
 	if (pHandler == 0 || Handler->pLoggerQueue == 0)
 	{
-		Status = ERR_BUR_ILLBPTR;
+		Status = ERR_BUR_ILLPAR;
 	}
 	else
 	{	
@@ -240,7 +240,7 @@ long int Logger::UserLogCreateLog(unsigned long pHandler)
 	//Check not null pointers
 	if (pHandler == 0)
 	{
-		Status = ERR_BUR_ILLBPTR;
+		Status = ERR_BUR_ILLPAR;
 	}
 	else
 	{
@@ -273,7 +273,7 @@ long int Logger::UserLogGetIdent(unsigned long pHandler)
 	//Check not null pointers
 	if (pHandler == 0)
 	{
-		Status = ERR_BUR_ILLBPTR;
+		Status = ERR_BUR_ILLPAR;
 	}	
 	else
 	{	

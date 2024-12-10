@@ -2,10 +2,10 @@
 <?AutomationStudio FileVersion="4.9"?>
 <BR.AS.HardwareTopology>
   <TimeStamps>
-    <TimeStamp LogicalPath="Dynamic_ARM.Hardware.hw" LastWriteTime="12/10/2024 15:32:13" />
+    <TimeStamp LogicalPath="Dinamic_Intel.Hardware.hw" LastWriteTime="12/10/2024 15:16:05" />
   </TimeStamps>
   <Modules>
-    <Module Name="4PPC30_043F_21B" Type="4PPC30.043F-21B" X="100" Y="100" />
+    <Module Name="X20CP1686X" Type="X20CP1686X" X="100" Y="100" />
   </Modules>
   <Links />
   <InfoElements />

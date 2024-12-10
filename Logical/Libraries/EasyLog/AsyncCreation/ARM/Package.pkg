@@ -20,7 +20,5 @@
     <Object Type="File">rtkPlainFifo.h</Object>
     <Object Type="File">arexport.h</Object>
     <Object Type="File">libAR.a</Object>
-    <Object Type="File">libarsystem.a</Object>
-    <Object Type="File">librtk_lib.a</Object>
   </Objects>
 </Package>
