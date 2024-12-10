@@ -4,8 +4,6 @@
   <Objects>
     <Object Type="Configuration">Dynamic_Intel</Object>
     <Object Type="Configuration">Dynamic_ARM</Object>
-    <Object Type="Configuration">C20</Object>
-    <Object Type="Configuration">ETA_Light</Object>
-    <Object Type="Configuration">ConfigNewC70</Object>
+    <Object Type="Configuration">Dynamic_ARM_2</Object>
   </Objects>
 </Physical>

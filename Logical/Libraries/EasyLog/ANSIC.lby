@@ -3,9 +3,10 @@
 <Library Version="1.00.0" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
   <Objects>
     <Object Type="File">EasyLog.fun</Object>
-    <Object Type="File" Description="Exported constants">EasyLog.var</Object>
-    <Object Type="File">GlobalIncludes.hpp</Object>
-    <Object Type="File">UserLogWrite.cpp</Object>
+    <Object Type="File">Logger.h</Object>
+    <Object Type="File">EasyLog.cpp</Object>
+    <Object Type="File">LoggerInternal.hpp</Object>
+    <Object Type="File">EasyLogInternal.cpp</Object>
     <Object Type="File" Description="Dynamic memory allocation reserve">heap.cpp</Object>
     <Object Type="Package">AsyncCreation</Object>
   </Objects>

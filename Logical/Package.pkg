@@ -9,10 +9,5 @@
     <Object Type="Program" Language="IEC">Example1</Object>
     <Object Type="Program" Language="IEC">Example2</Object>
     <Object Type="Program" Language="IEC">Example3</Object>
-    <Object Type="Program" Language="IEC">Example4</Object>
-    <Object Type="Program" Language="IEC">LoadCPU</Object>
-    <Object Type="Package">Async</Object>
-    <Object Type="Program" Language="ANSIC" TransferedForTargetSourceCompare="true">FunAsync</Object>
-    <Object Type="DataObject" Language="Vc" Description="640x480 (VGA)">Visu1</Object>
   </Objects>
 </Package>

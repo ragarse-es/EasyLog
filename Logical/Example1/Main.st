@@ -17,16 +17,13 @@
  *********************************************************************************)
 
 PROGRAM _INIT
-	(* Set an initial message *)
+	// Set an initial message
 	Message := 'TestMessage';
 		
-	//Repeat until finish the process, with or without errors
-	// This will create the logger if it does not exist
-	REPEAT
-	  	Status := EasyLog(FALSE, 'Temp', arEVENTLOG_SEVERITY_INFO, 123,  Message);
-		UNTIL Status <> ERR_FUB_BUSY 
-	END_REPEAT;
-		
+	//This will create the logger in case that does not exist in advance. 
+	//This is only necessary if the insert time will be very fast < 5ms.
+	// In that case this call with FALSE in Execute will create the logger to avoid Cycle Time Violation
+	Status := EasyLog(FALSE, 'Temp', arEVENTLOG_SEVERITY_INFO, 123,  Message);
 	
 END_PROGRAM
 
@@ -40,7 +37,7 @@ PROGRAM _CYCLIC
 	// Execute the logger insertion if InsertMessages = TRUE
 	Status := EasyLog(InsertMessages, 'Temp', arEVENTLOG_SEVERITY_INFO, 123,  Message);
  
-	IF Status <> ERR_OK AND Status <> ERR_FUB_BUSY THEN
+	IF Status <> ERR_OK THEN
 		//Check the error in the help and solve it
 	END_IF;
  	

@@ -1,6 +1,0 @@
-VAR
-	counter : DINT;
-	equalExecutes : BOOL;
-	Execute2 : BOOL;
-	Execute1 : BOOL;
-END_VAR
